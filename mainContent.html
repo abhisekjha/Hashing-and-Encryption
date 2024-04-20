@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Steganography</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <style>
     body {
       background-color: #f0f0f0;
@@ -17,131 +18,21 @@
 
 </head>
 <body>
-  <div class="container">
-    <div class="page-header">
-      <h1>Secure Hashing and Encryption Site</h1>
+  <div class="row">
+    <div class="col-md-6">
+        <h3>File Hashing</h3>
+        <input type="file" id="fileInput" class="form-control">
+        <button onclick="hashFile()" class="btn btn-primary">Hash File</button>
+        <p id="hashOutput"></p>
     </div>
-
-    <ul class="nav nav-tabs" id="tabs" data-tabs="tabs">
-      <li role="presentation" class="active"> <a href="#encode" data-toggle="tab">Encode</a></li>
-      <li role="presentation"> <a href="#decode" data-toggle="tab">Decode</a></li>
-    </ul>
-
-    <div id="my-tab-content" class="tab-content">
-      <div class="tab-pane active" id="encode">
-        <div>
-          <h2>Encode message</h2>
-          <form class="form" id = "encodeForm">
-            <div class="form-group">
-              <label>Plaintext File (Carrier):</label>
-              <input class="form-control" type="file" name="plaintextFile" onchange="previewEncodeImage()">
-            </div>
-
-            <div class="form-group">
-              <label>Message File:</label>
-              <input class="form-control" type="file" name="messageFile" required>
-          </div>
-
-          <!-- Starting Bit (S) Input -->
-            <div class="form-group">
-                <label for="startBit">Start Bit (S):</label>
-                <input type="number" class="form-control" id="startBit" placeholder="Enter starting bit number">
-            </div>
-
-            <!-- Length/Periodicity (L) Input -->
-            <div class="form-group">
-                <label for="periodicity">Periodicity (L):</label>
-                <input type="number" class="form-control" id="periodicity" placeholder="Enter bit replacement periodicity">
-            </div>
-
-            <!-- Mode of Operation (C) Input -->
-            <div class="form-group">
-                <label for="mode">Mode of Operation (C):</label>
-                <select class="form-control" id="mode">
-                    <option value="simple">Simple</option>
-                    <option value="complex">Complex (Variable L)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-              <button type="button" class="encode btn btn-default pull-right" onclick="encodeMessage(event)">Encode</button>
-            </div>
-          </form>
-          <div class="clearfix"></div>
-        </div>
-
-        <div class="error" style="display: none;"></div>
-        <div class="binary" style="display: none;">
-          <h3>Binary representation of your message</h3>
-          <textarea class="form-control message" style="word-wrap:break-word;">
-          </textarea>
-        </div>
-        <div class="images" style="display: none;">
-          <div class="original" style="display: none;">
-            <h3>Original</h3>
-            <canvas></canvas>
-          </div>
-          <div class="nulled" style="display: none;">
-            <h3>Normalized</h3>
-            <canvas></canvas>
-          </div>
-          <div class="message" style="display: none;">
-            <h3>Message hidden in <span class="glyphicon glyphicon-arrow-right"></span> save as</h3>
-            <canvas></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane" id="decode">
-        <div>
-          <h2>decode</h2>
-          <form class="form">
-            <div class="form-group">
-              <input class="form-control" type="file" name="decodeFile" onchange="previewDecodeImage()">
-            </div>
-            
-            <div class="form-group">
-              <label for="decodeStartBit">Decode Start Bit (S):</label>
-              <input type="number" class="form-control" id="decodeStartBit" placeholder="Enter starting bit number for decoding">
-          </div>
-          <div class="form-group">
-              <label for="decodePeriodicity">Decode Periodicity (L):</label>
-              <input type="number" class="form-control" id="decodePeriodicity" placeholder="Enter periodicity for decoding">
-          </div>     
-          <div class="form-group">
-            <label for="outputExtension">Output File Extension:</label>
-            <select class="form-control" id="outputExtension">
-              <option value="jpg">JPG</option>
-              <option value="png">PNG</option>
-              <option value="txt">Text (txt)</option>
-              <option value="pdf">PDF</option>
-              <option value="mp4">MP4</option>
-              <option value="mov">MOV</option>
-              <option value="wav">WAV</option>
-              <!-- Add other extensions as needed -->
-            </select>
-          </div>           
-          
-          <div class="form-group">
-            <button type="button" class="decode btn btn-default pull-right" onclick="decodeMessage(event)">Decode</button>
-          </div>
-          
-          </form>
-          <div class="clearfix"></div>
-        </div>
-        <div class="binary-decode" style="display: none;">
-          <h3>Hidden message</h3>
-          <textarea class="form-control message" style="word-wrap:break-word;">
-          </textarea>
-        </div>
-        <div class="decode" style="display: none;">
-          <h3>Input</h3>
-          <canvas></canvas>
-        </div>
-      </div>
-
+    <div class="col-md-6">
+        <h3>Encryption/Decryption</h3>
+        <input type="text" id="cryptoInput" placeholder="Enter text" class="form-control">
+        <button onclick="encryptText()" class="btn btn-success">Encrypt</button>
+        <button onclick="decryptText()" class="btn btn-warning">Decrypt</button>
+        <p id="cryptoOutput"></p>
     </div>
-  </div>
+</div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
