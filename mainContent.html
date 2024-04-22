@@ -5,44 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crypto Services</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-auth.js"></script>
-  <script src="script.js"></script>
-  <!-- <style>
-    body {
-      background-color: #f0f0f0;
-      font-family: 'Courier New', Courier, monospace;
-    }
-    canvas {
-      max-width: 100%;
-    }
-  </style> -->
-
 </head>
 <body>
   <div class="row">
-    <div class = "col-md-6">
+    <div class="col-md-6">
       <h3>Generate Key</h3>
       <button onclick="generateKey()" class="btn btn-primary">Generate Key</button>
       <p id="keyOutput"></p>
+      <p id="keyTime"></p>
     </div>
     <div class="col-md-6">
-        <h3>File Hashing</h3>
-        <input type="file" id="fileInput" class="form-control">
-        <button onclick="hashFile()" class="btn btn-primary">Hash File</button>
-        <p id="hashOutput"></p>
+      <h3>File Hashing</h3>
+      <input type="file" id="fileInput" class="form-control">
+      <button onclick="hashFile()" class="btn btn-primary">Hash File</button>
+      <button onclick="compareHashes()" class="btn btn-secondary">Compare Hashes</button>
+      <button onclick="downloadHashes()" class="btn btn-secondary">Download Hashes</button>
+      <p id="hashOutput"></p>
+      <p id="hashTime"></p>
     </div>
     <div class="col-md-6">
-        <h3>Encryption/Decryption</h3>
-        <input type="text" id="cryptoInput" placeholder="Enter text" class="form-control">
-        <button onclick="encryptText()" class="btn btn-success">Encrypt File</button>
-        <button onclick="decryptText()" class="btn btn-warning">Decrypt File</button>
-        <p id="cryptoOutput"></p>
+      <h3>File Management</h3>
+      <input type="number" id="fileIndex" placeholder="Enter file index" class="form-control">
+      <button onclick="downloadFile(document.getElementById('fileIndex').value)" class="btn btn-success">Download File</button>
+      <button onclick="removeFile(document.getElementById('fileIndex').value)" class="btn btn-danger">Remove File</button>
+      <p id="fileOutput"></p>
+      <p id="fileTime"></p>
     </div>
+    <div class="col-md-6">
+      <h3>Encryption/Decryption</h3>
+      <input type="file" id="cryptoFileInput" class="form-control">
+      <button onclick="encryptFileAES192()" class="btn btn-success">Encrypt File (AES-192)</button>
+      <button onclick="encryptFileDES()" class="btn btn-success">Encrypt File (DES)</button>
+      <button onclick="encryptFileBlowfish()" class="btn btn-success">Encrypt File (Blowfish)</button>
+      <button onclick="decryptFile()" class="btn btn-warning">Decrypt File</button>
+      <p id="cryptoOutput"></p>
+      <p id="cryptoTime"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>All Files, Hashes, and Keys</h3>
+      <button onclick="displayFiles()" class="btn btn-info">Display All</button>
+      <p id="allOutput"></p>
+    </div>
+  </div>
 </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
