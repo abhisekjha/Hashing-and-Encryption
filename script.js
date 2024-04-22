@@ -11,7 +11,16 @@ function hashFile() {
         alert("Please select a file first!");
     }
 }
-
+// Cryptographic Functions
+function generateKey() {
+    
+    console.log("Generate key placeholder function");  // Placeholder
+  }
+  
+  function hashFile() {
+    console.log("Hash file placeholder function");  // Placeholder
+  }
+  
 function encryptText() {
     const input = document.getElementById('cryptoInput').value;
     const key = CryptoJS.enc.Utf8.parse('1234567890123456'); // Sample Key
